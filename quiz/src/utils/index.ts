@@ -1,0 +1,1 @@
+export const shuffleArray=<T>(inputArray:T[]):T[]=>[...inputArray].sort( () => .5 - Math.random() )
