@@ -3,20 +3,26 @@ import './QuestionCard.css';
 interface Props {
 	question: string;
 	answers: string[];
-	callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
-	userAnswer: any;
+	callback?: () => void;
+	correctAnswer: string;
 	questionNr: number;
 	totalQuestions: number;
+	onNextPressed: () => void;
 }
 
 const QuestionCard: React.FC<Props> = ({
 	question,
 	answers,
 	callback,
-	userAnswer,
+	correctAnswer,
 	questionNr,
 	totalQuestions,
+	onNextPressed,
 }) => {
+	const onAnswerClick = (answer: string) => {
+		console.log(answer);
+	};
+
 	return (
 		<div className={'Question_Card_Container'}>
 			<div className='question_container'>
@@ -25,7 +31,11 @@ const QuestionCard: React.FC<Props> = ({
 
 			<div className='answer_container'>
 				{answers.map((answer, index) => (
-					<button className='answer_item' key={index}>
+					<button
+						className='answer_item'
+						key={index}
+						onClick={() => onAnswerClick(answer)}
+					>
 						<p className='answer'>{`${index + 1}. ${answer}`}</p>
 					</button>
 				))}
@@ -33,7 +43,11 @@ const QuestionCard: React.FC<Props> = ({
 
 			<div className='controllers_container'>
 				<p>{`${questionNr} / ${totalQuestions}`}</p>
-				<button className='next_button'>next</button>
+				{questionNr !== totalQuestions && (
+					<button className='next_button' onClick={onNextPressed}>
+						next
+					</button>
+				)}
 			</div>
 		</div>
 	);

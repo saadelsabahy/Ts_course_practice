@@ -46,9 +46,11 @@ body {
 	border: 0;
 	outline: none !important;
 	box-shadow: none !important;
+	color: rgb(99, 27, 158);
 }
 .answer_item:hover {
-	background-color: #ccc;
+	background-color: rgb(99, 27, 158);
+	color: #fff;
 }
 .controllers_container {
 	display: flex;
