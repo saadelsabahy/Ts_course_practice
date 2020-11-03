@@ -48,6 +48,42 @@ body {
 	box-shadow: none !important;
 	color: rgb(99, 27, 158);
 }
+.selected_answer {
+	display: flex;
+	align-items: center;
+	color: #fff;
+	padding: 0 10px;
+	margin: 0;
+	border-radius: 10px;
+	border: 0;
+	outline: none !important;
+	box-shadow: none !important;
+	background-color: rgb(99, 27, 158);
+}
+.answer_item_correct {
+	display: flex;
+	align-items: center;
+	background-color: rgb(17, 223, 17);
+	padding: 0 10px;
+	margin: 0;
+	border-radius: 10px;
+	border: 0;
+	outline: none !important;
+	box-shadow: none !important;
+	color: rgb(244, 250, 253);
+}
+.answer_item_wrong {
+	display: flex;
+	align-items: center;
+	background-color: rgb(54, 8, 8);
+	padding: 0 10px;
+	margin: 0;
+	border-radius: 10px;
+	border: 0;
+	outline: none !important;
+	box-shadow: none !important;
+	color: rgb(244, 240, 247);
+}
 .answer_item:hover {
 	background-color: rgb(99, 27, 158);
 	color: #fff;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { selectedAnswerIndexType } from '../../App';
 import './QuestionCard.css';
 interface Props {
 	question: string;
@@ -8,6 +9,10 @@ interface Props {
 	questionNr: number;
 	totalQuestions: number;
 	onNextPressed: () => void;
+	onSelectAnswer: (answerIndex: selectedAnswerIndexType) => void;
+	selectedAnswerIndex: selectedAnswerIndexType;
+	correctAnswerIndex: selectedAnswerIndexType;
+	inCorrectAnswers: string[];
 }
 
 const QuestionCard: React.FC<Props> = ({
@@ -18,11 +23,11 @@ const QuestionCard: React.FC<Props> = ({
 	questionNr,
 	totalQuestions,
 	onNextPressed,
+	onSelectAnswer,
+	selectedAnswerIndex,
+	correctAnswerIndex,
+	inCorrectAnswers,
 }) => {
-	const onAnswerClick = (answer: string) => {
-		console.log(answer);
-	};
-
 	return (
 		<div className={'Question_Card_Container'}>
 			<div className='question_container'>
@@ -32,9 +37,19 @@ const QuestionCard: React.FC<Props> = ({
 			<div className='answer_container'>
 				{answers.map((answer, index) => (
 					<button
-						className='answer_item'
+						className={
+							correctAnswerIndex === index &&
+							typeof correctAnswerIndex === 'number'
+								? 'answer_item_correct'
+								: correctAnswerIndex !== index &&
+								  typeof correctAnswerIndex === 'number'
+								? 'answer_item_wrong'
+								: selectedAnswerIndex === index
+								? 'selected_answer'
+								: 'answer_item'
+						}
 						key={index}
-						onClick={() => onAnswerClick(answer)}
+						onClick={() => onSelectAnswer(index)}
 					>
 						<p className='answer'>{`${index + 1}. ${answer}`}</p>
 					</button>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Difficulty, fetchQuestions, Question } from './Api';
 import QuestionCard from './Components/QuestionCard/QuestionCard';
 import './App.css';
+export type selectedAnswerIndexType = number | undefined;
 function App() {
 	const [loading, setloading] = useState<boolean>(false);
 	const [showStartQuizButton, setshowStartQuizButton] = useState<boolean>(
@@ -11,7 +12,12 @@ function App() {
 	const [selectedQuestionIndex, setselectedQuestionIndex] = useState<number>(
 		0
 	);
-
+	const [selectedAnswerIndex, setselectedAnswerIndex] = useState<
+		selectedAnswerIndexType
+	>(undefined);
+	const [correctAnswerIndex, setcorrectAnswerIndex] = useState<
+		selectedAnswerIndexType
+	>(undefined);
 	useEffect(() => {
 		return () => {};
 	}, []);
@@ -28,12 +34,42 @@ function App() {
 				console.log(e);
 			});
 	};
-	const onNextPressed = () => {
-		setselectedQuestionIndex((prev) =>
-			prev !== questions.length ? prev + 1 : 0
-		);
-	};
+	console.log(questions);
 
+	const onNextPressed = () => {
+		const correctAnswerIndex = questions[
+			selectedQuestionIndex
+		].answers.findIndex(
+			(item) => item === questions[selectedQuestionIndex].correct_answer
+		);
+		setcorrectAnswerIndex(correctAnswerIndex);
+		setTimeout(() => {
+			setcorrectAnswerIndex(undefined);
+			setselectedAnswerIndex(undefined);
+			setselectedQuestionIndex((prev) =>
+				prev !== questions.length ? prev + 1 : 0
+			);
+		}, 700);
+	};
+	const onSelectAnswer = (selectedIndex: selectedAnswerIndexType) => {
+		setselectedAnswerIndex(selectedIndex);
+		if (selectedQuestionIndex + 1 == questions.length) {
+			const correctAnswerIndex = questions[
+				selectedQuestionIndex
+			].answers.findIndex(
+				(item) => item === questions[selectedQuestionIndex].correct_answer
+			);
+			setcorrectAnswerIndex(correctAnswerIndex);
+			setTimeout(() => {
+				setquestions([]);
+				setcorrectAnswerIndex(undefined);
+				setselectedAnswerIndex(undefined);
+				window.location.reload();
+			}, 500);
+			/* 	setcorrectAnswerIndex(undefined);
+			setselectedAnswerIndex(undefined); */
+		}
+	};
 	return (
 		<div className='App'>
 			{showStartQuizButton && (
@@ -59,6 +95,12 @@ function App() {
 					correctAnswer={questions[selectedQuestionIndex].correct_answer}
 					onNextPressed={onNextPressed}
 					totalQuestions={questions.length}
+					onSelectAnswer={onSelectAnswer}
+					selectedAnswerIndex={selectedAnswerIndex}
+					correctAnswerIndex={correctAnswerIndex}
+					inCorrectAnswers={
+						questions[selectedQuestionIndex].incorrect_answers
+					}
 				/>
 			)}
 		</div>
