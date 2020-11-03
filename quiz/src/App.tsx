@@ -34,7 +34,6 @@ function App() {
 				console.log(e);
 			});
 	};
-	console.log(questions);
 
 	const onNextPressed = () => {
 		const correctAnswerIndex = questions[
@@ -53,7 +52,7 @@ function App() {
 	};
 	const onSelectAnswer = (selectedIndex: selectedAnswerIndexType) => {
 		setselectedAnswerIndex(selectedIndex);
-		if (selectedQuestionIndex + 1 == questions.length) {
+		if (selectedQuestionIndex + 1 === questions.length) {
 			const correctAnswerIndex = questions[
 				selectedQuestionIndex
 			].answers.findIndex(
